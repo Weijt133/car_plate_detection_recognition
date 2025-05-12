@@ -1,7 +1,5 @@
 # Car License Plate Detection & Recognition
 
-> **Group Name**: Hyperpioneers  
-
 ## 📖 Project Overview
 
 - **Framework**: PyTorch
