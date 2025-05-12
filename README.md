@@ -43,15 +43,16 @@ This repository implements a two-stage deep-learning pipeline for vehicle licens
 
 ## 1. Introduction & Objectives
 
-Accurate automatic detection and recognition of vehicle license plates play a vital role in traffic monitoring, parking management, and intelligent transportation systems. The goals of this project are:
+In this project, we delve into the exciting world of computer vision and optical character recognition (OCR) to solve a practical yet challenging problem: building a real-time, end-to-end system that not only accurately locates vehicle license plates but also decodes their alphanumeric content under diverse environmental conditions. We chose to integrate the high-precision, single-pass YOLOv5 detector—optimized for rapid plate localization without redundant computations—with a CRNN-based OCR module for sequence-level character recognition.
 
-- Quickly build a license-plate detector using a pre-trained YOLOv5 model  
-- Fine-tune on a small real-world dataset (1,001 images) to achieve ≥ 99% detection accuracy  
-- Apply transfer learning to improve robustness under low-visibility (hazy) conditions  
+- **Object Detection**:
+Leveraging Ultralytics’ YOLOv5 framework, we conducted a two-stage fine-tuning: first on clear (“ground truth”) samples, then adapting to haze by freezing early convolutional layers and retraining on mixed clear/foggy datasets.
+- **Text Recognition**:
+The CRNN model combines CNN feature extraction with bidirectional LSTM sequence modeling and CTC decoding. We trained and validated this OCR module on cropped plate regions to maximize character-level accuracy.
 
 ---
 
 ## 2. Data Annotation
 
-- We used [LabelImg](https://github.com/tzutalin/labelImg) (or a custom script) to draw bounding boxes around plates.  
-- Annotation formats supported: Pascal VOC XML or YOLO TXT.  
+- Our dataset is derived from the website provided in the project list: https://data.mendeley.com/datasets/p3jr4555tf/1. This dataset provides two groups of pictures containing license plates, one of the groups is "Ground Turth images", the other is "New Hazy dataset".
+- "Ground Turth images" group has 1001 clear images, those images has 3 types: ".jpg", ".png" and ".JPG". The "New Hazy dataset "group also has 1001 images, it consists of the same pictures but has a fog effect with just one ".png" type.
