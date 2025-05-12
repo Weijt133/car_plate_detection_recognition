@@ -11,8 +11,8 @@ This repository implements a two-stage deep-learning pipeline for vehicle licens
 
 ## 📑 Table of Contents
 
-- [1. Introduction, Goal and Problem statement]
-- [2. Data Sources](#Data-Sources)
+- [1. Introduction & Objectives](#1-introduction--objectives)
+- [2. Data Sources](#2-data-annotation)
 - [3. YOLOv5](#YOLOv5)
     - [3.1 Data Analysis](#Data-Analysis)
     - [3.2 Methods](#Methods)
