@@ -1,7 +1,6 @@
 # Car License Plate Detection & Recognition
 
 > **Group Name**: Hyperpioneers  
-> **Course**: COMP9444 (Master of AI, UNSW)  
 
 ## 📖 Project Overview
 
@@ -56,3 +55,38 @@ The CRNN model combines CNN feature extraction with bidirectional LSTM sequence 
 
 - Our dataset is derived from the website provided in the project list: https://data.mendeley.com/datasets/p3jr4555tf/1. This dataset provides two groups of pictures containing license plates, one of the groups is "Ground Turth images", the other is "New Hazy dataset".
 - "Ground Turth images" group has 1001 clear images, those images has 3 types: ".jpg", ".png" and ".JPG". The "New Hazy dataset "group also has 1001 images, it consists of the same pictures but has a fog effect with just one ".png" type.
+
+---
+
+## 3. YOLOv5
+
+### 3.1 Data Analysis
+
+### Dataset Composition
+- Fine-tuned initially on **1001 Ground Truth bounding boxes (clear images)**.
+- Second phase training on **foggy/hazy images**:
+  - `Ground Truth images.zip` (250 clear images)
+  - `New Hazy dataset.zip` (250 haze-degraded images)
+
+### Haze-Induced Challenges
+- Fog and haze reduce local contrast and blur edges—critical for YOLOv5’s convolutional feature extraction.
+- Studies show up to **15% mAP drop** when applying clear-trained detectors to foggy images without preprocessing.
+
+### 3.2 Methods
+
+- Used pretrained YOLOv5 model from HuggingFace:
+  - [`keremberke/yolov5m-license-plate`](https://huggingface.co/keremberke/yolov5m-license-plate)
+- Phase 1: Fine-tuned on 1001 Ground Truth images
+  - Achieved **~99% accuracy**
+- Phase 2: **Transfer Learning on haze**
+  - **Frozen first 10 convolutional layers** (retain general features)
+  - Trained on **mixed dataset**: 250 GT + 250 haze images
+  - Training command:
+    ```bash
+    python train.py --img 640 --batch 16 --epochs 30 --patience 10 --cache ram
+    ```
+  - Used default optimizer (**SGD**)
+ 
+### 3.3 Predicted Outcomes
+![GT_IMG](sample_img/val_batch1_pred.jpg)
+![FOG_IMG](sample_img/val_batch2_pred.jpg)
